@@ -44,11 +44,14 @@ function tesselate(pointA, pointB, subdivisionsX, subdivisionsY) {
 	}
 
 	var faces = [];
+	var toTheRight = false;
 	// 2) generate the triangles from top to bottom, left to right
 	for(j = 0; j < subdivisionsY - 1; j++) {
 		
 		row = vertices[j];
 		var nextRow = vertices[j + 1];
+
+		toTheRight = (j % 2 === 0);
 
 		for(i = 0; i < subdivisionsX - 1; i++) {
 			var a = row[i];
@@ -61,8 +64,15 @@ function tesselate(pointA, pointB, subdivisionsX, subdivisionsY) {
 			// / = abd, bcd
 			// \ = abc, cda
 
-			faces.push(makeTriangle(a, b, d));
-			faces.push(makeTriangle(b, c, d));
+			if(toTheRight) {
+				faces.push(makeTriangle(a, b, d));
+				faces.push(makeTriangle(b, c, d));
+			} else {
+				faces.push(makeTriangle(a, b, c));
+				faces.push(makeTriangle(c, d, a));
+			}
+			
+			toTheRight = !toTheRight;
 		}
 	}
 
