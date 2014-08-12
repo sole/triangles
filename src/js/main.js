@@ -45,9 +45,6 @@ rawGeometry.faces.forEach(function(f) {
 var betterMesh = new THREE.Mesh(meshGeometry, new THREE.MeshBasicMaterial({ color: 0xFF0000, wireframe: true }));
 scene.add(betterMesh);
 
-var debugCube = new THREE.Mesh( new THREE.BoxGeometry(10, 10, 10), new THREE.MeshBasicMaterial({ color: 0x00FF00, wireframe: true }) );
-debugCube.scale.multiplyScalar(10);
-scene.add(debugCube);
 requestAnimationFrame(render);
 
 function onWindowResized() {
