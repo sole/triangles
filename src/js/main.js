@@ -17,23 +17,33 @@ document.body.appendChild(renderer.domElement);
 window.addEventListener('resize', onWindowResized);
 onWindowResized();
 
-var triangles = tesselate([0, 0], [100, 100], 5, 5);
+var rawGeometry = tesselate([0, 0], [100, 100], 5, 5);
 
-console.log(triangles);
 
 var geometry = new THREE.Geometry();
-triangles.forEach(function(t) {
+rawGeometry.vertices.forEach(function(t) {
 	t.forEach(function(tt) {
 		var v = new THREE.Vector3(tt[0], tt[1], 0);
 		geometry.vertices.push(v);
-		console.log('boo', v.x, v.y);
 	});
 });
 var material = new THREE.PointCloudMaterial({ color: 0xFFFF00, size: 5 });
-var mesh = new THREE.PointCloud(geometry, material);
-//mesh.rotation.y = Math.PI / 4;
-scene.add(mesh);
-console.log(material);
+var points = new THREE.PointCloud(geometry, material);
+scene.add(points);
+
+var meshGeometry = new THREE.Geometry();
+rawGeometry.vertices.forEach(function(t) {
+	t.forEach(function(tt) {
+		var v = new THREE.Vector3(tt[0], tt[1], 0);
+		meshGeometry.vertices.push(v);
+	});
+});
+rawGeometry.faces.forEach(function(f) {
+	var face = new THREE.Face3(f[0], f[1], f[2]);
+	meshGeometry.faces.push(face);
+});
+var betterMesh = new THREE.Mesh(meshGeometry, new THREE.MeshBasicMaterial({ color: 0xFF0000, wireframe: true }));
+scene.add(betterMesh);
 
 var debugCube = new THREE.Mesh( new THREE.BoxGeometry(10, 10, 10), new THREE.MeshBasicMaterial({ color: 0x00FF00, wireframe: true }) );
 debugCube.scale.multiplyScalar(10);
