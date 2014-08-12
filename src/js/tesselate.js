@@ -2,7 +2,7 @@ function makeTriangle(a, b, c) {
 	return [ a[2], b[2], c[2] ];
 }
 
-function tesselate(pointA, pointB, subdivisionsX, subdivisionsY) {
+function tesselate(pointA, pointB, subdivisionsX, subdivisionsY, randomX, randomY) {
 // A(x1,y1) ---------------------+
 // |                             |
 // |                             |
@@ -15,14 +15,16 @@ function tesselate(pointA, pointB, subdivisionsX, subdivisionsY) {
 	
 	subdivisionsX = subdivisionsX !== undefined ? subdivisionsX : 3;
 	subdivisionsY = subdivisionsY !== undefined ? subdivisionsY : 3;
+	randomX = randomX !== undefined ? randomX : 0.5;
+	randomY = randomY !== undefined ? randomY : 0.5;
 
 	// 1) generate the vertices in a 'grid' fashion
 	var dx = pointB[0] - pointA[0];
 	var dy = pointB[1] - pointA[1];
 	var incX = dx / subdivisionsX;
 	var incY = dy / subdivisionsY;
-
-	console.log(dx, dy, incX, incY);
+	var randX = incX * randomX;
+	var randY = incY * randomY;
 
 	var y = pointA[1];
 
@@ -31,8 +33,7 @@ function tesselate(pointA, pointB, subdivisionsX, subdivisionsY) {
 		var x = pointA[0];
 
 		for(i = 0; i < subdivisionsX; i++) {
-			// console.log(i, j, x, y);
-			var vertex = [x, y, rawVertices.length];
+			var vertex = [x + rand(randX), y + rand(randY), rawVertices.length];
 			rawVertices.push(vertex);
 			row.push(vertex);
 			x += incX;
@@ -80,6 +81,11 @@ function tesselate(pointA, pointB, subdivisionsX, subdivisionsY) {
 		vertices: vertices,
 		faces: faces
 	};
+}
+
+
+function rand(v) {
+	return (Math.random() * 0.5 - 1) * v;
 }
 
 module.exports = tesselate;
