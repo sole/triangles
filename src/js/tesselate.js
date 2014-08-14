@@ -1,8 +1,10 @@
+var seedrandom = require('seedrandom');
+
 function makeTriangle(a, b, c) {
 	return [ a[2], b[2], c[2] ];
 }
 
-function tesselate(pointA, pointB, subdivisionsX, subdivisionsY, randomX, randomY) {
+function tesselate(pointA, pointB, subdivisionsX, subdivisionsY, randomX, randomY, seed) {
 // A(x1,y1) ---------------------+
 // |                             |
 // |                             |
@@ -17,6 +19,9 @@ function tesselate(pointA, pointB, subdivisionsX, subdivisionsY, randomX, random
 	subdivisionsY = subdivisionsY !== undefined ? subdivisionsY : 3;
 	randomX = randomX !== undefined ? randomX : 0.5;
 	randomY = randomY !== undefined ? randomY : 0.5;
+	seed = seed !== undefined ? seed : Date.now();
+	
+	var rand = makeRandomiser(seed);
 
 	// 1) generate the vertices in a 'grid' fashion
 	var dx = pointB[0] - pointA[0];
@@ -84,8 +89,16 @@ function tesselate(pointA, pointB, subdivisionsX, subdivisionsY, randomX, random
 }
 
 
-function rand(v) {
-	return (Math.random() * 0.5 - 1) * v;
+function makeRandomiser(seed) {
+	var gen = seedrandom(seed);
+
+	function rand(v) {
+		return (gen() * 0.5 - 1) * v;
+	}
+
+	return rand;
 }
+
+
 
 module.exports = tesselate;
