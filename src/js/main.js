@@ -20,17 +20,6 @@ onWindowResized();
 var rawGeometry = tesselate([0, 0], [500, 500], 10, 10, 1.5, 1.5, 1); /* always the same seed... for now */
 
 
-/*var geometry = new THREE.Geometry();
-rawGeometry.vertices.forEach(function(t) {
-	t.forEach(function(tt) {
-		var v = new THREE.Vector3(tt[0], tt[1], 0);
-		geometry.vertices.push(v);
-	});
-});
-var material = new THREE.PointCloudMaterial({ color: 0xFFFF00, size: 2 });
-var points = new THREE.PointCloud(geometry, material);
-scene.add(points);*/
-
 var meshGeometry = new THREE.Geometry();
 rawGeometry.vertices.forEach(function(t) {
 	t.forEach(function(tt) {
@@ -38,14 +27,20 @@ rawGeometry.vertices.forEach(function(t) {
 		meshGeometry.vertices.push(v);
 	});
 });
+
+var red = new THREE.Color( 0xFF0000 );
+var green = new THREE.Color( 0x00FF00 );
+var blue = new THREE.Color( 0x0000FF );
+
 rawGeometry.faces.forEach(function(f) {
 	var face = new THREE.Face3(f[0], f[1], f[2]);
+	face.vertexColors = [ red, green, blue ];
 	meshGeometry.faces.push(face);
 });
 
 meshGeometry.center();
 
-var betterMesh = new THREE.Mesh(meshGeometry, new THREE.MeshBasicMaterial({ color: 0xFF0000, wireframe: true }));
+var betterMesh = new THREE.Mesh(meshGeometry, new THREE.MeshBasicMaterial( { color: 0xffffff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors } ));
 scene.add(betterMesh);
 
 requestAnimationFrame(render);
