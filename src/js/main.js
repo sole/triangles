@@ -43,7 +43,7 @@ rawGeometry.faces.forEach(function(f) {
 	meshGeometry.faces.push(face);
 });
 
-THREE.GeometryUtils.center(meshGeometry);
+meshGeometry.center();
 
 var betterMesh = new THREE.Mesh(meshGeometry, new THREE.MeshBasicMaterial({ color: 0xFF0000, wireframe: true }));
 scene.add(betterMesh);
