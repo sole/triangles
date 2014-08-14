@@ -17,7 +17,7 @@ document.body.appendChild(renderer.domElement);
 window.addEventListener('resize', onWindowResized);
 onWindowResized();
 
-var rawGeometry = tesselate([0, 0], [500, 500], 10, 10, 1.5, 1.5);
+var rawGeometry = tesselate([0, 0], [500, 500], 10, 10, 1.5, 1.5, 1); /* always the same seed... for now */
 
 
 /*var geometry = new THREE.Geometry();
