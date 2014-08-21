@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var rename = require('gulp-rename');
 var browserify = require('gulp-browserify');
+var yargs = require('yargs');
 
 var DIST = './dist';
 
@@ -27,7 +28,7 @@ gulp.task('build-js', function() {
   return gulp.src('src/js/main.js')
   .pipe(browserify({
     //insertGlobals: true,
-    debug: !gulp.env.production // TODO fix to get rid of the deprecated notice
+    debug: !yargs.argv.production
   }))
   .pipe(rename('bundle.js'))
   .pipe(gulp.dest(DIST + '/js'));
