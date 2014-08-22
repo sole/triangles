@@ -1,5 +1,6 @@
 var THREE = require('three');
 var tesselate = require('./tesselate');
+var getColors = require('./getColors');
 
 var contentWidth = 320,
 	contentHeight = 240;
@@ -11,7 +12,7 @@ var camera = new THREE.PerspectiveCamera(60, contentWidth / contentHeight, 1, 10
 var cameraTarget = new THREE.Vector3(0, 0, 0);
 var cameraPosition = new THREE.Vector3(0, 0, 300);
 
-
+console.log(getColors());
 document.body.appendChild(renderer.domElement);
 
 window.addEventListener('resize', onWindowResized);
@@ -34,7 +35,7 @@ var blue = new THREE.Color( 0x0000FF );
 
 rawGeometry.faces.forEach(function(f) {
 	var face = new THREE.Face3(f[0], f[1], f[2]);
-	face.vertexColors = [ red, green, blue ];
+	face.vertexColors = getColors();
 	meshGeometry.faces.push(face);
 });
 
