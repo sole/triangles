@@ -1,9 +1,14 @@
 var THREE = require('three');
 
 var palette = [
-	0xFF0000,
-	0x00FF00,
-	0x0000FF
+	0x82eb5d,
+	0x8bea38,
+	0x8d33e3,
+	0xf3ce49,
+	0x6bbfdb,
+	0x1a307b,
+	0xda1d21,
+	0xb14ee9
 ];
 
 function displaceHSL(v) {
@@ -11,7 +16,7 @@ function displaceHSL(v) {
 	var hsl = color.getHSL();
 	var sign = Math.random() > 0.5 ? -1 : 1;
 	var h = hsl.h;
-	var variance = 0.25;
+	var variance = 0.2;
 	var dh = Math.random() * variance * sign;
  
 	if(sign > 0) {
@@ -21,7 +26,7 @@ function displaceHSL(v) {
 	}
 
 	hsl.h = h;
-	hsl.s -= 0.2;
+	//hsl.s -= 0.2;
 	//hsl.l -= 0.2;
 	color.setHSL(hsl.h, hsl.s, hsl.l);
 	return color.getHex();
@@ -30,8 +35,8 @@ function displaceHSL(v) {
 var lastIndex = 0;
 function getNextIndex() {
 	lastIndex++;
-	return ((0.5 + 0.5 * Math.sin(lastIndex * 0.5)) * palette.length) | 0;
-	//return ( ( Math.random() * palette.length ) | 0);
+	//return ((0.5 + 0.5 * Math.sin(lastIndex * 0.5)) * palette.length) | 0;
+	return ( ( Math.random() * palette.length ) | 0);
 }
 
 function getColors() {
